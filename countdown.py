@@ -16,8 +16,17 @@ NB_TO_CALCULATE_MAX = 999
 NB_DRAWN_PLATES = 6
 # Plates
 PLATES_TO_DRAW = {"doubles" : [1,2,3,4,5,6,7,8,9,10], "simples" : [25, 50, 75, 100]}
+# Operands list
+# OPERANDS_LIST = {"add" : "+", "substraction" : "-", "multiplication" : "*", "division" : "/"}
+OPERANDS_LIST = ("+", "-", "*", "/")
 # Plates drawn
 plates_drawn = []
+# List of intermediate results
+intermediates_results = []
+# Final calculated number
+final_result = 0
+# Number to calculate
+number_to_calculate = 0
 
 # Generate random number to calculate in range 101, 999
 def generate_nb_to_calculate():
@@ -47,3 +56,35 @@ def draw_plates(arr_plates):
                 plate_drawn = random.randint(PLATES_TO_DRAW[random_choice][0],PLATES_TO_DRAW[random_choice][len(PLATES_TO_DRAW[random_choice]) - 1])
         arr_plates.append(plate_drawn)
     return arr_plates
+
+# Display plates
+def display_plates(arr_plates):
+    """
+
+    :param arr_plates:
+    :return:
+    """
+    print(arr_plates)
+
+# Add intermediate result to list
+def add_intermediate_result(inter_result, arr_results):
+    """
+
+    :param inter_result:
+    :param arr_results:
+    :return: arr_results
+    """
+    arr_results.append(inter_result)
+    return arr_results
+
+# Delete number used (from list of plates or list of intermediate results)
+def delete_number(number_to_delete, list_numbers):
+    """
+
+    :param number_to_delete:
+    :param list_numbers:
+    :return:
+    """
+    if number_to_delete in list_numbers:
+        list_numbers.remove(number_to_delete)
+    return list_numbers
