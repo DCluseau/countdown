@@ -88,3 +88,18 @@ def delete_number(number_to_delete, list_numbers):
     if number_to_delete in list_numbers:
         list_numbers.remove(number_to_delete)
     return list_numbers
+
+# Select which list to choose from and a number
+def select_number(list_calc_nb, list_init_nb):
+    """
+
+    :param list_calc_nb:
+    :param list_init_nb:
+    :return:
+    """
+    number = 0
+    selected_list = int(input(f"Please select a list to choose a number from : \n"
+                              f"Initial numbers :{display_plates(list_init_nb)}\n"
+                              f"Calculated numbers : {list_calc_nb}\n"))
+    # Display each list to choose from
+    return number
