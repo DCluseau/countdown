@@ -31,10 +31,8 @@ final_result = 0
 # Continue game
 continue_game = True
 
-
 # Selected operand
 # selected_operand = ""
-
 
 # Generate random number to calculate in range 101, 999
 def generate_nb_to_calculate():
@@ -44,7 +42,6 @@ def generate_nb_to_calculate():
     """
     nb_to_calculate = random.randint(NB_TO_CALCULATE_MIN, NB_TO_CALCULATE_MAX)
     return nb_to_calculate
-
 
 # Draw 6 plates
 def draw_plates(arr_plates):
@@ -69,7 +66,6 @@ def draw_plates(arr_plates):
         arr_plates.append(plate_drawn)
     return arr_plates
 
-
 # Display plates
 def display_plates(arr_plates):
     """
@@ -78,7 +74,6 @@ def display_plates(arr_plates):
     :return:
     """
     print(arr_plates)
-
 
 # Add intermediate result to list
 def add_intermediate_result(inter_result, arr_results):
@@ -104,7 +99,7 @@ def delete_number(number_to_delete, list_numbers):
         list_numbers.remove(number_to_delete)
     return list_numbers
 
-
+# Select list to remove number chosen from
 def select_list_nb(list_nb_init, list_nb_res):
     """
 
@@ -115,6 +110,10 @@ def select_list_nb(list_nb_init, list_nb_res):
     selected_list = 0
 
     # Select list
+    if len(list_nb_init) < 1:
+        selected_list = 2
+    elif len(list_nb_res) < 1:
+        selected_list = 1
     while selected_list not in (1, 2):
         try:
             selected_list = int(input(f"Please select a list to choose a number from : \n"
@@ -159,7 +158,7 @@ def select_operand():
     """
     operand = ""
     try:
-        operand = str(input(f"Choose operand : {OPERANDS_LIST}"))
+        operand = str(input(f"Choose operand : {str(OPERANDS_LIST.keys())}"))
     except ValueError:
         print("Error : must choose operator from displayed list.")
     if operand not in OPERANDS_LIST:
@@ -204,8 +203,6 @@ def display_operation(selected_oper, selected_number1, selected_number2, calc_re
     """
     print(f"{selected_number1} {selected_oper} {selected_number2} = {calc_result}")
 
-
-
 print("Welcome to \"Le compte est bon !\"")
 
 # Draw plates
@@ -225,7 +222,7 @@ intermediate_result2 = select_number(plates_drawn)
 selected_operand = select_operand()
 intermediates_results.append(calc_inter_result(intermediate_result1, intermediate_result2, selected_operand))
 plates_drawn = delete_number(intermediate_result2,plates_drawn)
-# test = len(intermediates_results) - 1
+
 display_operation(selected_operand, intermediate_result2, intermediate_result2,
                   intermediates_results[len(intermediates_results) - 1])
 
@@ -253,10 +250,12 @@ while continue_game:
 
     # Continue game or not
     continue_game = int(input(f"Continue game ?\n 1 - Yes\n 2 - No"))
-    if continue_game == 1:
+    if continue_game == 1 and (len(plates_drawn) + len(intermediates_results) > 1):
         continue_game = True
     else:
         continue_game = False
 
 # Display final result
+print(f"Number to calculate : {number_to_calculate}")
+print(f"Number calculated : {intermediates_results[len(intermediates_results) - 1]}")
 print(compare_results(intermediates_results[len(intermediates_results) - 1], number_to_calculate))
