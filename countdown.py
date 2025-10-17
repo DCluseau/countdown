@@ -97,9 +97,16 @@ def select_number(list_calc_nb, list_init_nb):
     :param list_init_nb:
     :return:
     """
-    number = 0
+    selected_list = 0
+    selected_plate = 0
+
+    # Select list
     selected_list = int(input(f"Please select a list to choose a number from : \n"
-                              f"Initial numbers :{display_plates(list_init_nb)}\n"
-                              f"Calculated numbers : {list_calc_nb}\n"))
-    # Display each list to choose from
-    return number
+                              f"1 - Initial numbers :{display_plates(list_init_nb)}\n"
+                              f"2 - Calculated numbers : {display_plates(list_calc_nb)}\n"))
+
+    # Select plate
+    selected_plate = int(input(f"Please select a number : \n"
+                              f"Available numbers :{display_plates(list_init_nb) if selected_list == 1 else display_plates(list_calc_nb)}\n"))
+
+    return selected_plate
