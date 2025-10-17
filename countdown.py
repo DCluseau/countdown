@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import random
+import operator
 
 # Le programme permet à l’utilisateur de jouer à ce jeu célèbre. Il tire au sort un nombre à obtenir entre 101 et 999, ainsi que 6 plaques – portant un nombre – tirés parmi 24 réparties ainsi : chaque nombre de 1 à 10 est présent 2 fois, et les nombres 25, 50, 75 et 100 sont présents en un seul exemplaire.
 # A chaque tour de jeu, l’utilisateur sélectionne une opération (addition, soustraction, multiplication, division) et 2 nombres parmi les plaques restantes et les nombres (restants) obtenus lors des opérations précédentes. L’opération appliquée à ces nombres (qui ne sont alors plus utilisables) fournit alors un nouveau nombre.
@@ -18,7 +19,7 @@ NB_DRAWN_PLATES = 6
 PLATES_TO_DRAW = {"doubles" : [1,2,3,4,5,6,7,8,9,10], "simples" : [25, 50, 75, 100]}
 # Operands list
 # OPERANDS_LIST = {"add" : "+", "substraction" : "-", "multiplication" : "*", "division" : "/"}
-OPERANDS_LIST = ("+", "-", "*", "/")
+OPERANDS_LIST = {"+" : operator.add , "-": operator.sub, "*" : operator.mul, "/" : operator.truediv}
 # Plates drawn
 plates_drawn = []
 # List of intermediate results
@@ -26,7 +27,12 @@ intermediates_results = []
 # Final calculated number
 final_result = 0
 # Number to calculate
-number_to_calculate = 0
+# number_to_calculate = 0
+# Continue game
+continue_game = True
+# Selected operand
+# selected_operand = ""
+
 
 # Generate random number to calculate in range 101, 999
 def generate_nb_to_calculate():
@@ -101,12 +107,112 @@ def select_number(list_calc_nb, list_init_nb):
     selected_plate = 0
 
     # Select list
-    selected_list = int(input(f"Please select a list to choose a number from : \n"
-                              f"1 - Initial numbers :{display_plates(list_init_nb)}\n"
-                              f"2 - Calculated numbers : {display_plates(list_calc_nb)}\n"))
+    while selected_list not in (1,2):
+        try:
+            selected_list = int(input(f"Please select a list to choose a number from : \n"
+                                  f"1 - Initial numbers :{display_plates(list_init_nb)}\n"
+                                  f"2 - Calculated numbers : {display_plates(list_calc_nb)}\n"))
+        except ValueError:
+            print("Error : must choose a number between 1 and 2.")
+        if selected_list not in (1, 2):
+            print("Error : must choose a number between 1 and 2.")
 
     # Select plate
-    selected_plate = int(input(f"Please select a number : \n"
+    while selected_plate not in selected_list:
+        try:
+            selected_plate = int(input(f"Please select a number : \n"
                               f"Available numbers :{display_plates(list_init_nb) if selected_list == 1 else display_plates(list_calc_nb)}\n"))
+        except ValueError:
+            print("Error : must choose a number from the displayed list.")
+        if selected_plate not in selected_list:
+            print("Error : must choose a number from the displayed list.")
 
     return selected_plate
+
+# Select operand
+def select_operand():
+    """
+
+    :return:
+    """
+    operand = ""
+    operand = str(input(f"Choose operand : {OPERANDS_LIST}"))
+    return operand
+
+# Compare results
+def compare_results(player_result, init_result):
+    """
+
+    :param player_result:
+    :param init_result:
+    :return:
+    """
+    if player_result == init_result:
+        score = "Le compte est bon !\n Patrice Laffont would be proud of you !"
+    else :
+        score = "Presque !"
+    return score
+
+# Calculate intermediate result
+def calc_inter_result(number1, number2, operand):
+    """
+
+    :param number1:
+    :param number2:
+    :param operand:
+    :return:
+    """
+    calculated_result = OPERANDS_LIST[operand](number1, number2)
+    return calculated_result
+
+# Display operation
+def display_operation(selected_oper, selected_number1, selected_number2, calc_result):
+    """
+
+    :param calc_result:
+    :param selected_oper:
+    :param selected_number1:
+    :param selected_number2:
+    :return:
+    """
+    print(f"{selected_number1} {selected_oper} {selected_number2} = {calc_result}")
+
+print("Welcome to \"Le compte est bon !\"")
+
+# Draw plates
+plates_drawn = draw_plates(plates_drawn)
+
+# Display plates
+print(f"Here are the plates drawn : \n {plates_drawn}")
+
+# Display number to calculate
+number_to_calculate = generate_nb_to_calculate()
+print(f"Here is the number to calculate : {number_to_calculate}")
+
+# First turn (no intermediate results)
+intermediate_result1 = int(input(f"Select a number : {display_plates(plates_drawn)}"))
+intermediate_result2 = int(input(f"Select a number : {display_plates(plates_drawn)}"))
+selected_operand = select_operand()
+intermediates_results.append(calc_inter_result(intermediate_result1,intermediate_result2,selected_operand))
+display_operation(selected_operand, intermediate_result1, intermediate_result2, intermediates_results[len(intermediates_results)])
+
+while continue_game:
+    # Select numbers
+    intermediate_result1 = select_number(intermediates_results, plates_drawn)
+    intermediate_result2 = select_number(intermediates_results, plates_drawn)
+    # Select operator
+    selected_operand = select_operand()
+    # Calculate intermediate result and add it to list
+    intermediates_results.append(calc_inter_result(intermediate_result1, intermediate_result2, selected_operand))
+    # Display operation
+    display_operation(selected_operand, intermediate_result1, intermediate_result2, intermediates_results[len(intermediates_results)])
+
+    # Continue game or not
+    continue_game = int(input(f"Continue game ?\n 1 - Yes\n 2 - No"))
+    if continue_game == 1:
+        continue_game = True
+    else:
+        continue_game = False
+
+# Display final result
+compare_results(intermediates_results[len(intermediates_results)], number_to_calculate)
