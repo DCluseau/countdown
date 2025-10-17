@@ -18,26 +18,27 @@ NB_DRAWN_PLATES = 6
 # Plates
 PLATES_TO_DRAW = {"doubles": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "simples": [25, 50, 75, 100]}
 # Operands list
-# OPERANDS_LIST = {"add" : "+", "substraction" : "-", "multiplication" : "*", "division" : "/"}
 OPERANDS_LIST = {"+": operator.add, "-": operator.sub, "*": operator.mul, "/": operator.truediv}
+# Other variables
 # Plates drawn
 plates_drawn = []
 # List of intermediate results
 intermediates_results = []
 # Final calculated number
 final_result = 0
-# Number to calculate
-# number_to_calculate = 0
 # Continue game
 continue_game = True
 
+# Variables used later in the program
+# Number to calculate
+# number_to_calculate
 # Selected operand
-# selected_operand = ""
+# selected_operand
 
 # Generate random number to calculate in range 101, 999
 def generate_nb_to_calculate():
     """
-
+    Usage: Generate random number to calculate in range 101, 999
     :return: number to calculate
     """
     nb_to_calculate = random.randint(NB_TO_CALCULATE_MIN, NB_TO_CALCULATE_MAX)
@@ -46,54 +47,50 @@ def generate_nb_to_calculate():
 # Draw 6 plates
 def draw_plates(arr_plates):
     """
-
+    Usage : generate 6 random int (plates) from the list of numbers to draw
     :param arr_plates: list of drawn plates
     :return: list of drawn plates
     """
     # For each plate, generate random choice between simple or double
     for i in range(NB_DRAWN_PLATES):
         random_choice = random.choice(list(PLATES_TO_DRAW.keys()))
-        plate_drawn = random.randint(PLATES_TO_DRAW[random_choice][0],
-                                     PLATES_TO_DRAW[random_choice][len(PLATES_TO_DRAW[random_choice]) - 1])
-        if random_choice == "simple":
+        plate_drawn = random.choice(PLATES_TO_DRAW[random_choice])
+        if random_choice == "simples":
             while plate_drawn in arr_plates:
-                plate_drawn = random.randint(PLATES_TO_DRAW[random_choice][0],
-                                             PLATES_TO_DRAW[random_choice][len(PLATES_TO_DRAW[random_choice]) - 1])
+                plate_drawn = random.choice(PLATES_TO_DRAW[random_choice])
         else:
-            while arr_plates.count(plate_drawn) > 1:
-                plate_drawn = random.randint(PLATES_TO_DRAW[random_choice][0],
-                                             PLATES_TO_DRAW[random_choice][len(PLATES_TO_DRAW[random_choice]) - 1])
+            while arr_plates.count(plate_drawn) > 2:
+                plate_drawn = random.choice(PLATES_TO_DRAW[random_choice])
         arr_plates.append(plate_drawn)
     return arr_plates
 
 # Display plates
 def display_plates(arr_plates):
     """
-
+    Usage : display a list of numbers
     :param arr_plates:
-    :return:
+    :return: None
     """
     print(arr_plates)
 
 # Add intermediate result to list
 def add_intermediate_result(inter_result, arr_results):
     """
-
+    Usage : Add intermediate result to list
     :param inter_result:
     :param arr_results:
-    :return: arr_results
+    :return: modified list of intermediate results
     """
     arr_results.append(inter_result)
     return arr_results
 
-
 # Delete number used (from list of plates or list of intermediate results)
 def delete_number(number_to_delete, list_numbers):
     """
-
+    Usage: Delete number used (from list of plates or list of intermediate results)
     :param number_to_delete:
     :param list_numbers:
-    :return:
+    :return: modified list
     """
     if number_to_delete in list_numbers:
         list_numbers.remove(number_to_delete)
@@ -102,10 +99,10 @@ def delete_number(number_to_delete, list_numbers):
 # Select list to remove number chosen from
 def select_list_nb(list_nb_init, list_nb_res):
     """
-
+    Usage:  Select list to remove number chosen from
     :param list_nb_init:
     :param list_nb_res:
-    :return:
+    :return: Selected list
     """
     selected_list = 0
 
@@ -131,9 +128,9 @@ def select_list_nb(list_nb_init, list_nb_res):
 # Select which list to choose from and a number
 def select_number(list_sel):
     """
-
+    Usage: Select number from list in parameter
     :param list_sel:
-    :return:
+    :return: Selected number
     """
 
     selected_plate = 0
@@ -153,8 +150,8 @@ def select_number(list_sel):
 # Select operand
 def select_operand():
     """
-
-    :return:
+    Usage: Choose an operator from a list
+    :return: Selected operator
     """
     operand = ""
     try:
@@ -168,10 +165,10 @@ def select_operand():
 # Compare results
 def compare_results(player_result, init_result):
     """
-
+    Usage: Compare calculated number and number to calculate
     :param player_result:
     :param init_result:
-    :return:
+    :return: Score (string)
     """
     if player_result == init_result:
         score = "Le compte est bon !\n Patrice Laffont would be proud of you !"
@@ -182,11 +179,11 @@ def compare_results(player_result, init_result):
 # Calculate intermediate result
 def calc_inter_result(number1, number2, operand):
     """
-
+    Usage: Calculate operation done between the two numbers with the operator in the parameters
     :param number1:
     :param number2:
     :param operand:
-    :return:
+    :return: Result of calculus
     """
     calculated_result = OPERANDS_LIST[operand](number1, number2)
     return calculated_result
@@ -194,15 +191,16 @@ def calc_inter_result(number1, number2, operand):
 # Display operation
 def display_operation(selected_oper, selected_number1, selected_number2, calc_result):
     """
-
+    Usage: Display operation done
     :param calc_result:
     :param selected_oper:
     :param selected_number1:
     :param selected_number2:
-    :return:
+    :return: None
     """
     print(f"{selected_number1} {selected_oper} {selected_number2} = {calc_result}")
 
+# Welcome message
 print("Welcome to \"Le compte est bon !\"")
 
 # Draw plates
@@ -249,7 +247,7 @@ while continue_game:
                       intermediates_results[len(intermediates_results) - 1])
 
     # Continue game or not
-    continue_game = int(input(f"Continue game ?\n 1 - Yes\n 2 - No"))
+    continue_game = int(input(f"Continue game ?\n 1 - Yes\n 2 - No\n"))
     if continue_game == 1 and (len(plates_drawn) + len(intermediates_results) > 1):
         continue_game = True
     else:
