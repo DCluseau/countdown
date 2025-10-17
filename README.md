@@ -23,7 +23,7 @@ Le programme indique alors à l’utilisateur si « le compte est bon » (le nom
 - Pour les tours suivants, le programme demande dans quelle liste le joueur veut utiliser un nombre, deux fois, ainsi que l'opérateur, puis calcule et affiche le nouveau résultat, toujours en supprimant les chiffres utilisés.
 - Le programme demande au joueur si il veut continuer. Si oui, il continue en boucle l'opération précédente jusqu'à ce que le joueur indique qu'il veut arrêter.
 - Si il ne reste plus qu'un nombre ou si le joueur indique qu'il veut arrêter, le programme affiche le résultat calculé ainsi que le nombre qu'il fallait calculer.
-- Si le nombre calculé est égal à celui qu'il fallait calculer, le programme félicite le joueur. Sinon, il écrit "Presque !"
+- Si le nombre calculé est égal à celui qu'il fallait calculer, le programme félicite le joueur :sunglasses: Sinon, il écrit "Presque !" :wink:
 
 ## Manuel d'utilisation
 
