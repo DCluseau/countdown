@@ -30,8 +30,9 @@ Le programme indique alors à l’utilisateur si « le compte est bon » (le nom
 - Installez Python 3
 - Lancer le fichier countdown.py dans la console
 - Attendre les instructions du programme
-- Lorsque le programme demande au joueur d'entrer quelque chose, il faut bien suivre les indications :
-  - Saisir 1 ou 2 quand on doit choisir entre deux listes ou pour continuer ou non le jeu.
-  - Saisir un nombre qui existe dans les listes présentées.
-  - Saisir un opérateur comme ceux présentés par le programme.
+>[!CAUTION]
+>- Lorsque le programme demande au joueur d'entrer quelque chose, il faut bien suivre les indications :
+>  - Saisir 1 ou 2 quand on doit choisir entre deux listes ou pour continuer ou non le jeu.
+>  - Saisir un nombre qui existe dans les listes présentées.
+>  - Saisir un opérateur comme ceux présentés par le programme.
 - Appuyez sur la touche Entrée pour valider votre saisie
